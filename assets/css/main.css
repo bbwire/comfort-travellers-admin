@@ -1,0 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom styles can be added here */
+/* Note: Preflight is disabled to avoid conflicts with Naive UI */
+

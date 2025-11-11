@@ -1,0 +1,24 @@
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: [
+    './components/**/*.{js,vue,ts}',
+    './layouts/**/*.vue',
+    './pages/**/*.vue',
+    './plugins/**/*.{js,ts}',
+    './app.vue',
+    './error.vue',
+  ],
+  theme: {
+    extend: {
+      colors: {
+        // Add brand colors here when provided
+      },
+    },
+  },
+  plugins: [],
+  // Disable Tailwind's preflight to avoid conflicts with Naive UI
+  corePlugins: {
+    preflight: false,
+  },
+}
+
