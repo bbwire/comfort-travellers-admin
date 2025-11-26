@@ -22,8 +22,8 @@
             :style="{ borderColor: formData.email ? '#2563eb' : '#d1d5db' }"
             :disabled="loading"
             @keyup.enter="handleLogin"
-            @focus="(e) => e.target.style.borderColor = '#2563eb'"
-            @blur="(e) => e.target.style.borderColor = '#d1d5db'"
+            @focus="(e) => (e.currentTarget as HTMLInputElement).style.borderColor = '#2563eb'"
+            @blur="(e) => (e.currentTarget as HTMLInputElement).style.borderColor = '#d1d5db'"
           />
         </div>
 
@@ -37,8 +37,8 @@
             :style="{ borderColor: formData.password ? '#2563eb' : '#d1d5db' }"
             :disabled="loading"
             @keyup.enter="handleLogin"
-            @focus="(e) => e.target.style.borderColor = '#2563eb'"
-            @blur="(e) => e.target.style.borderColor = '#d1d5db'"
+            @focus="(e) => (e.currentTarget as HTMLInputElement).style.borderColor = '#2563eb'"
+            @blur="(e) => (e.currentTarget as HTMLInputElement).style.borderColor = '#d1d5db'"
           />
         </div>
 
@@ -56,8 +56,8 @@
           }"
           :disabled="loading"
           @click="handleLogin"
-          @mouseover="(e) => { if (!loading) e.target.style.backgroundColor = '#1d4ed8' }"
-          @mouseout="(e) => { if (!loading) e.target.style.backgroundColor = '#2563eb' }"
+          @mouseover="(e) => { if (!loading) (e.currentTarget as HTMLButtonElement).style.backgroundColor = '#1d4ed8' }"
+          @mouseout="(e) => { if (!loading) (e.currentTarget as HTMLButtonElement).style.backgroundColor = '#2563eb' }"
         >
           {{ loading ? 'Signing in...' : 'Sign in' }}
         </button>
@@ -80,8 +80,8 @@
           }"
           :disabled="loadingGoogle"
           @click="handleGoogleLogin"
-          @mouseover="(e) => { if (!loadingGoogle) { e.target.style.backgroundColor = '#f9fafb'; e.target.style.borderColor = '#9ca3af'; } }"
-          @mouseout="(e) => { if (!loadingGoogle) { e.target.style.backgroundColor = 'white'; e.target.style.borderColor = '#d1d5db'; } }"
+          @mouseover="(e) => { if (!loadingGoogle) { const el = e.currentTarget as HTMLButtonElement; el.style.backgroundColor = '#f9fafb'; el.style.borderColor = '#9ca3af'; } }"
+          @mouseout="(e) => { if (!loadingGoogle) { const el = e.currentTarget as HTMLButtonElement; el.style.backgroundColor = 'white'; el.style.borderColor = '#d1d5db'; } }"
         >
           <svg style="width: 1.25rem; height: 1.25rem;" viewBox="0 0 24 24" fill="currentColor">
             <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>

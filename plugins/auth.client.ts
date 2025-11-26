@@ -1,33 +1,26 @@
 import { onAuthStateChanged, type User } from 'firebase/auth'
-import type { Firestore } from 'firebase/firestore'
 
-export default defineNuxtPlugin({
-  name: 'auth',
-  dependsOn: ['firebase'],
-  async setup() {
-    const { $firebase } = useNuxtApp()
-    const authStore = useAuthStore()
+export default defineNuxtPlugin(() => {
+  if (!process.client) return
 
-    if (process.client) {
-      // Set initial loading state
-      authStore.setLoading(true)
+  const { $firebase } = useNuxtApp()
+  const authStore = useAuthStore()
 
-      // Listen to auth state changes
-      onAuthStateChanged($firebase.auth, async (user: User | null) => {
-        authStore.setUser(user)
-        authStore.setLoading(false)
+  if (!$firebase) {
+    console.error('Firebase plugin did not load')
+    return
+  }
 
-        if (user) {
-          // Fetch user profile from Firestore
-          await authStore.fetchUserProfile(user.uid, $firebase.firestore)
-        } else {
-          authStore.setProfile(null)
-        }
-      })
+  authStore.setLoading(true)
+
+  onAuthStateChanged($firebase.auth, async (user: User | null) => {
+    authStore.setUser(user)
+    authStore.setLoading(false)
+
+    if (user) {
+      await authStore.fetchUserProfile(user.uid, $firebase.firestore)
     } else {
-      // On server, just set loading to false
-      authStore.setLoading(false)
+      authStore.setProfile(null)
     }
-  },
+  })
 })
-

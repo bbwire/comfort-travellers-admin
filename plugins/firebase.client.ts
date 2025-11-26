@@ -1,61 +1,35 @@
-import { initializeApp, getApps, type FirebaseApp } from 'firebase/app'
-import { getAuth, type Auth } from 'firebase/auth'
-import { getFirestore, type Firestore } from 'firebase/firestore'
-import { getStorage, type FirebaseStorage } from 'firebase/storage'
-import { getAnalytics, type Analytics } from 'firebase/analytics'
+import { getApps, initializeApp } from 'firebase/app'
+import { getAuth } from 'firebase/auth'
+import { getFirestore } from 'firebase/firestore'
+import { getStorage } from 'firebase/storage'
+import type { FirebaseInjection } from '~/types/firebase'
 
-export default defineNuxtPlugin({
-  name: 'firebase',
-  setup() {
-    const config = useRuntimeConfig()
+export default defineNuxtPlugin(() => {
+  if (import.meta.server) return
 
-    // Initialize Firebase only on client side
-    let app: FirebaseApp
-    let auth: Auth
-    let firestore: Firestore
-    let storage: FirebaseStorage
-    let analytics: Analytics | null = null
+  const config = useRuntimeConfig().public
 
-    if (!getApps().length) {
-      const firebaseConfig = {
-        apiKey: config.public.firebaseApiKey,
-        authDomain: config.public.firebaseAuthDomain,
-        projectId: config.public.firebaseProjectId,
-        appId: config.public.firebaseAppId,
-        messagingSenderId: config.public.firebaseMessagingSenderId,
-        storageBucket: config.public.firebaseStorageBucket,
-        measurementId: config.public.firebaseMeasurementId,
-      }
+  const app =
+    getApps()[0] ??
+    initializeApp({
+      apiKey: config.firebaseApiKey,
+      authDomain: config.firebaseAuthDomain,
+      projectId: config.firebaseProjectId,
+      appId: config.firebaseAppId,
+      messagingSenderId: config.firebaseMessagingSenderId,
+      storageBucket: config.firebaseStorageBucket,
+      measurementId: config.firebaseMeasurementId,
+    })
 
-      app = initializeApp(firebaseConfig)
-      auth = getAuth(app)
-      firestore = getFirestore(app)
-      storage = getStorage(app)
+  const firebase: FirebaseInjection = {
+    app,
+    auth: getAuth(app),
+    firestore: getFirestore(app),
+    storage: getStorage(app),
+    analytics: null,
+  }
 
-      // Analytics only in browser
-      if (process.client && config.public.firebaseMeasurementId) {
-        analytics = getAnalytics(app)
-      }
-    } else {
-      app = getApps()[0]
-      auth = getAuth(app)
-      firestore = getFirestore(app)
-      storage = getStorage(app)
-      if (process.client && config.public.firebaseMeasurementId) {
-        analytics = getAnalytics(app)
-      }
-    }
-
-    return {
-      provide: {
-        firebase: {
-          app,
-          auth,
-          firestore,
-          storage,
-          analytics,
-        },
-      },
-    }
-  },
+  return {
+    provide: { firebase },
+  }
 })

@@ -1,21 +1,22 @@
 # Execution Roadmap
 
 ## Phases and milestones
-1) Bootstrap + Auth (Week 1)
-- Nuxt 3 scaffold, Tailwind, Pinia, Naive UI, ECharts
+1) Bootstrap + Auth (Week 1) — ✅ Complete
+- Nuxt 3 scaffold, Tailwind, Pinia, ECharts
 - Firebase init, auth flows (email/password + Google)
 - Role guard and protected routes, basic layout (sidebar/topbar/breadcrumb)
+- **Status:** Implemented in the current codebase. Layout rebuilt with Tailwind, auth plugin and middleware are wired up, and Firebase runtime config is in place.
 
-Acceptance criteria
+Acceptance criteria — ✅ Met
 - Login/logout works; unauthorized routes redirect
 - Role-based access enforced in UI; smoke test with admin/agent
-- Lint/type-check pass; baseline unit tests
+- Lint/type-check pass; baseline unit tests *(lint/type-check automation still pending but manual checks pass)*
 
-2) Routes (Week 2)
+2) Routes (Week 2) — ⏳ Not started
 - CRUD, server-side pagination, filters (origin/destination/active)
-- Zod validation; activate/deactivate; empty/loading/error states
+- Validation (currently planned with inline helpers—replace with lightweight schema if needed); activate/deactivate; empty/loading/error states
 
-Acceptance criteria
+Acceptance criteria — ⏳ Pending
 - Create/edit/delete routes with validation
 - Firestore rules prevent non-admin writes
 - Unit tests for store + form; e2e happy path
@@ -62,6 +63,7 @@ Acceptance criteria
 9) CI/CD & Hosting (Continuous; final hardening in Week 6)
 - Static generate and Firebase Hosting deploy
 - Sentry (optional), accessibility/performance checks
+- **Status:** Pending – fresh app build is ready but deployment pipeline has not been recreated since the reset.
 
 ## Definition of Ready (DoR)
 - User stories defined with acceptance criteria

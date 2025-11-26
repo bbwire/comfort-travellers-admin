@@ -16,9 +16,5 @@ export default {
     },
   },
   plugins: [],
-  // Disable Tailwind's preflight to avoid conflicts with Naive UI
-  corePlugins: {
-    preflight: false,
-  },
 }
 

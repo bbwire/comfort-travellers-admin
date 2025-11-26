@@ -6,9 +6,13 @@
       <p class="text-gray-600 mb-8">
         You don't have permission to access this resource.
       </p>
-      <n-button type="primary" @click="goHome">
+      <button
+        type="button"
+        class="px-6 py-3 bg-gray-900 text-white rounded-md font-medium hover:bg-gray-800 transition"
+        @click="goHome"
+      >
         Go to Dashboard
-      </n-button>
+      </button>
     </div>
   </div>
 </template>
